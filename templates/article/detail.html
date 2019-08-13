@@ -7,6 +7,8 @@
 <!-- 写入 base.html 中定义的 content -->
 {% block content %}
 
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap4/css/code.css' %}"> {#语法高亮#}
+
 <!-- 文章详情 -->
 <div class="container">
     <div class="row">
@@ -15,7 +17,8 @@
         <div class="col-12 alert alert-success">作者：{{ article.author }}</div>
         <!-- 文章正文 -->
         <div class="col-12">
-            <p>{{ article.body }}</p>
+            <!---加入safe过滤器，防止django将body部分进行转义-->
+            <p>{{ article.body|safe }}</p>
         </div>
     </div>
 </div>

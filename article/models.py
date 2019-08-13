@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 # timezone 用于处理时间相关事务。
 from django.utils import timezone
+#markdown
+from mdeditor.fields import MDTextField
 
 # 博客文章数据模型
 #使用ORM操作数据
@@ -14,7 +16,7 @@ class ArticlePost(models.Model):
     title = models.CharField(max_length=100)
 
     # 文章正文。保存大量文本使用 TextField
-    body = models.TextField()
+    body = MDTextField()
 
     # 创建时间 default=timezone.now 在创建数据时将默认写入当前的时间
     created_time = models.DateTimeField(default=timezone.now)
