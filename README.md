@@ -18,6 +18,7 @@ learn from ：https://www.dusaiphoto.com/article/detail/20/
 
 > 记录访客:https://blog.csdn.net/Duke10/article/details/81273741
 
+> 梗概删除策略，设置文章状态默认为1，删除=0，查询filter（status=1）
 
 ## solved
 > mysql无法存入中文
