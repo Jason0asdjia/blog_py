@@ -2,6 +2,7 @@
 python+django+mysql for myblog to study
 
 learn from ：https://www.dusaiphoto.com/article/detail/20/
+
 🌍
 基于`python3.7`和`Django2.1`的博客。   
 
