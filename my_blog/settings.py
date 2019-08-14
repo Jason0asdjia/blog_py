@@ -122,7 +122,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False #没有国际化需要Fasle，否则数据中插入时间会warning
 
 
 # Static files (CSS, JavaScript, Images)
