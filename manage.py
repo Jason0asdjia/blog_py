@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!~/.conda/envs/dj2.1/bin/python
 import os
 import sys
 
