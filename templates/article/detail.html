@@ -14,7 +14,10 @@
     <div class="row">
         <!-- 标题及作者 -->
         <h1 class="col-12 mt-4 mb-4">{{ article.title }}</h1>
-        <div class="col-12 alert alert-success">作者：{{ article.author }}</div>
+        <div class="col-12 alert alert-success" style="line-height: 38px">作者：{{ article.author }}
+            <button class="btn btn-warning" style="float: right">
+                <a href="{% url "article:article_delete" article.id %}">删除文章</a></button>
+        </div>
         <!-- 文章正文 -->
         <div class="col-12">
             <!---加入safe过滤器，防止django将body部分进行转义-->

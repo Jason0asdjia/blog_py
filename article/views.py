@@ -63,3 +63,10 @@ def article_create(request):
         article_post_form = ArticlePostForm()
         context = {'article_post_form' : article_post_form}
         return render(request, 'article/create.html', context)
+
+#删除文章页面
+def article_delete(request, id):
+    #根据id删除文章
+    article = ArticlePost.objects.get(id=id)
+    article.delete()
+    return redirect("article:article_list")
