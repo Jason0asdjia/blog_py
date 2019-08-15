@@ -15,8 +15,11 @@
         <!-- 标题及作者 -->
         <h1 class="col-12 mt-4 mb-4">{{ article.title }}</h1>
         <div class="col-12 alert alert-success" style="line-height: 38px">作者：{{ article.author }}
-            <button class="btn btn-warning" style="float: right">
+            <button class="btn btn-warning" style="float: right;margin-left:5px">
                 <a href="{% url "article:article_delete" article.id %}">删除文章</a></button>
+            <button class="btn btn-warning" style="float: right">
+                        <a href="{% url "article:article_update" article.id %}">编辑文章</a></button>
+
         </div>
         <!-- 文章正文 -->
         <div class="col-12">

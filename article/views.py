@@ -44,6 +44,8 @@ def article_create(request):
     #如果用户提交数据
     if request.method == "POST":
         article_post_form = ArticlePostForm(data=request.POST)
+        # print(request.POST)
+        # print("__________________")
         #判断数据是否满足要求
         if article_post_form.is_valid():
             new_article = article_post_form.save(commit=False)
@@ -56,7 +58,7 @@ def article_create(request):
     
         #如果数据不符合要求
         else:
-            return HttpResponse("表单内容非法，清重新填写！")
+            return HttpResponse("提交内容非法，清重新填写！")
 
     #如果用户请求获取数据GET
     else:
@@ -70,3 +72,31 @@ def article_delete(request, id):
     article = ArticlePost.objects.get(id=id)
     article.delete()
     return redirect("article:article_list")
+
+#修改文章
+def article_update(request, id):
+    """
+    通过POST方法提交表单，更新title 和 body
+    """
+    #获取需要修改的文章对象
+    article = ArticlePost.objects.get(id=id)
+
+    if request.method == "POST":
+        #将提交的数据赋值到表单中
+        article_post_form = ArticlePostForm(data=request.POST)
+        # print(request.POST)
+        if article_post_form.is_valid():
+            article.title = request.POST['title']
+            article.body = request.POST['body']
+            article.save()
+            #返回到修改后文章详情页面
+            return redirect("article:article_detail", id=id)
+
+        else:
+            return HttpResponse("修改非法，清重新修改！")
+    #若用户获取数据
+    else:
+        article_post_form = ArticlePostForm()
+        context = {"article":article, "article_post_form":article_post_form}
+        #返回到模板渲染
+        return render(request, 'article/update.html', context)
