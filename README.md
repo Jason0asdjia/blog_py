@@ -30,3 +30,4 @@ learn from ：https://www.dusaiphoto.com/article/detail/20/
 
 >layer组件引入错误
 > -参考：https://blog.csdn.net/shog808/article/details/86488936
+> -- https://www.layui.com/doc/
