@@ -16,9 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url, include
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('article/', include('article.urls', namespace='article')),
-    url(r'mdeditor', include('mdeditor.urls'))
+    path('userprofile/', include('userprofile.urls', namespace='userprofile')),
+    url(r'mdeditor', include('mdeditor.urls')),
+    url(r'^favicon.ico$',RedirectView.as_view(url=r'static/favicon.ico')),
 ]
