@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 
-from .froms import UserLoginForm, UserRegisterForm
+from .forms import UserLoginForm, UserRegisterForm, ProfileForm
+from .models import Profile
 
 # Create your views here.
 
@@ -83,3 +84,40 @@ def user_delete(request, id):
 
     else:
         return HttpResponse("权限不足！！")
+
+#编辑用户信息
+@login_required(login_url='/userprofile/login/')
+def profile_edit(request, id):
+    user = User.objects.get(id=id)
+    #因为信号接收器的原因，无法动态获取
+    # profile = Profile.objects.get(user_id=id)
+    if Profile.objects.filter(user_id=id).exists():
+        profile = Profile.objects.get(user_id=id)
+    else:
+        profile = Profile.objects.create(user=user)
+
+    if request.method == "POST":
+        if request.user != user:
+            return HttpResponse("权限不足！！")
+        # profile_form = ProfileForm(data=request.POST)
+        # 上传的文件保存在 request.FILES 中，通过参数传递给表单类
+        profile_form = ProfileForm(request.POST, request.FILES)
+        if profile_form.is_valid():
+            profile_cd = profile_form.cleaned_data
+            # print(profile_cd)
+            profile.phone = profile_cd['phone']
+            profile.bio = profile_cd['bio']
+            if 'avatar' in request.FILES:
+                profile.avatar = profile_cd["avatar"]
+            profile.save()
+
+            return redirect("userprofile:edit", id=id)
+        else:
+            return HttpResponse("信息有误，清重新填写！")
+    elif request.method == "GET":
+        # profile_form = ProfileForm()  //bootstrap已经写好表单，不需要这个对象
+        context = {'profile':profile, 'user':user}
+        return render(request, 'userprofile/edit.html', context)
+    else:
+        return HttpResponse("请求非法！")
+

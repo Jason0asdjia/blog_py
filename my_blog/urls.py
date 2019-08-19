@@ -14,6 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf.urls import url, include
 from django.views.generic.base import RedirectView
@@ -22,6 +24,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('article/', include('article.urls', namespace='article')),
     path('userprofile/', include('userprofile.urls', namespace='userprofile')),
+    path('password_reset/', include('password_reset.urls')),
     url(r'mdeditor', include('mdeditor.urls')),
     url(r'^favicon.ico$',RedirectView.as_view(url=r'static/favicon.ico')),
 ]
+
+#添加上传图片路径
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

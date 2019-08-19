@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 import markdown
 
 from .forms import ArticlePostForm
@@ -40,6 +41,7 @@ def article_detail(request, id):
     return render(request, 'article/detail.html', context)
 
 #提交文章的页面
+@login_required(login_url='/userprofile/login/')
 def article_create(request):
     #如果用户提交数据
     if request.method == "POST":
@@ -49,8 +51,8 @@ def article_create(request):
         #判断数据是否满足要求
         if article_post_form.is_valid():
             new_article = article_post_form.save(commit=False)
-            #创立新的id作者,默认为id=1的作者
-            new_article.author = User.objects.get(id=1)
+            # 指定目前登录的用户为作者
+            new_article.author = User.objects.get(id=request.user.id)
             #存入数据库
             new_article.save()
             #save后返回文章列表页面
